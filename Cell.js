@@ -8,8 +8,12 @@ function Cell(i, j, col) {
         this.y = j*w;
         //color of cell
         this.col = col;
-        this.white = false;
-}
+        // this.neighbors = {
+        //      {-1, 0},
+        // {0,-1},    {0,+1},
+        //      {+1, 0}
+        // };
+    }
 
 Cell.prototype.show = function() {
     stroke(0);
@@ -22,21 +26,22 @@ Cell.prototype.show = function() {
 }
 
 Cell.prototype.destroy = function() {
-  this.white = true;
+  this.col = color(255);
   this.moveDown();
-  //this.floodFill();
+  this.floodFill();
 }
 
- Cell.prototype.moveDown = function() {
-   for(var y = this.j; y >= 0; y--) {
-     this.swap(grid[this.i][y]);
-   }
- }
+Cell.prototype.moveDown = function() {
+    for(var y = 0; y < this.j; y++) {
+        console.log(grid[this.i][y])
+        this.swap(grid[this.i][y]);
+    }
+}
 
  Cell.prototype.swap = function(neighbor) {
-   this.col = neighbor.col;
-   this.white = false;
-   neighbor.white = true;
+    var tmp = grid[this.i][this.j].col;
+    grid[this.i][this.j].col = neighbor.col;
+    neighbor.col = tmp;
  }
 
 Cell.prototype.contains = function(x, y) {
@@ -72,21 +77,9 @@ Cell.prototype.floodFill = function() {
         console.log("no neighbors");
     } else {
         for (var i = 0; i < neighbors.length; i++){
-            if(neighbors[i].col == this.col && !neighbors[i].white){
+            if(neighbors[i].col == this.col){
                 neighbors[i].destroy();
             }
         }
     }
-    // for (var xoff = -1; xoff <= 1; xoff++) {
-    //     for ( var yoff = -1; yoff <= 1; yoff++) {
-    //       var i = this.i + xoff;
-    //       var j = this.j + yoff;
-    //       if (i > -1 && i < cols && j > -1 && j < rows) {
-    //         var neighbor = grid[i][j];
-    //         if(neighbor.col == this.col && !neighbor.white) {
-    //           neighbor.destroy();
-    //         }
-    //       }
-    //     }
-    // }
 }
