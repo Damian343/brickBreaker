@@ -8,6 +8,7 @@ function Cell(i, j, col) {
         this.y = j*w;
         //color of cell
         this.col = col;
+        this.white = false;
         // this.neighbors = {
         //      {-1, 0},
         // {0,-1},    {0,+1},
@@ -17,23 +18,18 @@ function Cell(i, j, col) {
 
 Cell.prototype.show = function() {
     stroke(0);
-    if(this.white) {
-      fill(255);
-    } else {
-      fill(this.col);
-    }
+	this.white ? fill(255) : fill(this.col);	
+
     rect(this.x, this.y, w, w);
 }
 
 Cell.prototype.destroy = function() {
-  this.col = color(255);
-  this.moveDown();
-  this.floodFill();
+    this.white = true;
+	this.floodFill();
 }
 
 Cell.prototype.moveDown = function() {
     for(var y = 0; y < this.j; y++) {
-        console.log(grid[this.i][y])
         this.swap(grid[this.i][y]);
     }
 }
@@ -42,7 +38,7 @@ Cell.prototype.moveDown = function() {
     var tmp = grid[this.i][this.j].col;
     grid[this.i][this.j].col = neighbor.col;
     neighbor.col = tmp;
- }
+}
 
 Cell.prototype.contains = function(x, y) {
   return (x > this.x && x < this.x + w && y > this.y && y < this.y + w);
@@ -55,16 +51,16 @@ Cell.prototype.getNeighbors = function() {
     var bottom = grid[this.i  ][this.j+1];
     var left   = grid[this.i-1][this.j  ];
 
-    if(this.safeIndex(top))   { neighbors.push(top)   };
-    if(this.safeIndex(right)) { neighbors.push(right) };
-    if(this.safeIndex(bottom)){ neighbors.push(bottom)};
-    if(this.safeIndex(left))  { neighbors.push(left)  };
+    if(this.safeIndex(top))   { neighbors.push(top);    }
+    if(this.safeIndex(right)) { neighbors.push(right);  }
+    if(this.safeIndex(bottom)){ neighbors.push(bottom); }
+    if(this.safeIndex(left))  { neighbors.push(left);   }
 
     return neighbors;
 }
 
 Cell.prototype.safeIndex = function(cell){
-    if(cell){
+  if(cell){
         if(cell.i < cols && cell.i >= 0 && cell.j < rows && cell.j >= 0) { 
           return true;
         }
@@ -77,8 +73,9 @@ Cell.prototype.floodFill = function() {
         console.log("no neighbors");
     } else {
         for (var i = 0; i < neighbors.length; i++){
-            if(neighbors[i].col == this.col){
-                neighbors[i].destroy();
+		console.log(neighbors[i]);;
+            if(neighbors[i].col == this.col && !neighbors[i].white){
+               neighbors[i].destroy();
             }
         }
     }

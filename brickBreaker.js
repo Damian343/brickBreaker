@@ -28,6 +28,7 @@ function mousePressed(){
 		for(var j = 0; j < rows; j++){
             if(grid[i][j].contains(mouseX, mouseY)){
                 grid[i][j].destroy();
+                checkBlocks();
             }       
         }
     }
@@ -39,6 +40,30 @@ function make2DArray(cols, rows) {
     arr[i] = new Array(rows);
   }
   return arr;
+}
+
+function checkBlocks(){
+  for(var i = 0; i < cols; i++){
+  	for(var j = 0; j < rows; j++){
+  		if(grid[i][j].white){
+        grid[i][j].white = false;
+  			moveUp(grid[i][j]);
+  		}
+  	}
+  }
+}
+
+function moveUp(cell){
+  var i = cell.i;
+  for (var y = cell.j; y >= 0; y--) {
+    if(grid[i][y].white){
+      grid[i][y+1].white = true;
+      break;
+    }
+    if(y == 0){
+      grid[i][0].white = true;
+    }
+  }
 }
 
 function draw() {
