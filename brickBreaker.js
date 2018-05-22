@@ -46,7 +46,7 @@ function checkBlocks(){
   for(var i = 0; i < cols; i++){
   	for(var j = 0; j < rows; j++){
   		if(grid[i][j].white){
-        grid[i][j].white = false;
+            grid[i][j].white = false;
   			moveUp(grid[i][j]);
   		}
   	}
@@ -56,14 +56,24 @@ function checkBlocks(){
 function moveUp(cell){
   var i = cell.i;
   for (var y = cell.j; y >= 0; y--) {
-    if(grid[i][y].white){
-      grid[i][y+1].white = true;
-      break;
-    }
-    if(y == 0){
-      grid[i][0].white = true;
+    if(grid[i][y].white) {
+        grid[i][y+1].white = true;
+        break;
+    } if(y == 0) {
+        grid[i][0].white = true;
+        break;
+    } else {
+        swap(grid[i][y], grid[i][y+1]);
     }
   }
+}
+//need to swap top neighbor color to the current cell,
+//if the top neighbor = white then
+//no need to switch colors just turn white
+function swap(curr, neighbor) {
+    var tmp = grid[curr.i][curr.j].col;
+    grid[curr.i][curr.j].col = neighbor.col;
+    neighbor.col = tmp;
 }
 
 function draw() {

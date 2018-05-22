@@ -73,7 +73,6 @@ Cell.prototype.floodFill = function() {
         console.log("no neighbors");
     } else {
         for (var i = 0; i < neighbors.length; i++){
-		console.log(neighbors[i]);;
             if(neighbors[i].col == this.col && !neighbors[i].white){
                neighbors[i].destroy();
             }
