@@ -56,7 +56,6 @@ function checkBlocks(){
 function moveUp(cell){
   var i = cell.i;
   for (var y = cell.j; y >= 0; y--) {
-      console.log(y);
     if(grid[i][y].white) {
         grid[i][y+1].white = true;
         break;
@@ -70,7 +69,6 @@ function moveUp(cell){
 }
 
 function swap(curr, neighbor) {
-    //console.log(curr.j + " " + neighbor.j);
     var tmp = grid[curr.i][curr.j].col;
     grid[curr.i][curr.j].col = neighbor.col;
     neighbor.col = tmp;

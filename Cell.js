@@ -46,25 +46,13 @@ Cell.prototype.contains = function(x, y) {
 
 Cell.prototype.getNeighbors = function() {
     var neighbors = [];
-    var top    = grid[this.i  ][this.j-1];
-    var right  = grid[this.i+1][this.j  ];
-    var bottom = grid[this.i  ][this.j+1];
-    var left   = grid[this.i-1][this.j  ];
 
-    if(this.safeIndex(top))   { neighbors.push(top);    }
-    if(this.safeIndex(right)) { neighbors.push(right);  }
-    if(this.safeIndex(bottom)){ neighbors.push(bottom); }
-    if(this.safeIndex(left))  { neighbors.push(left);   }
+    if(this.j-1 >= 0  ) { neighbors.push(grid[this.i  ][this.j-1]); }
+    if(this.i+1 < cols) { neighbors.push(grid[this.i+1][this.j  ]); }
+    if(this.j+1 < rows) { neighbors.push(grid[this.i  ][this.j+1]); }
+    if(this.i-1 >= 0  ) { neighbors.push(grid[this.i-1][this.j  ]); }
 
     return neighbors;
-}
-
-Cell.prototype.safeIndex = function(cell){
-  if(cell){
-        if(cell.i < cols && cell.i >= 0 && cell.j < rows && cell.j >= 0) { 
-          return true;
-        }
-  } else { return false; }
 }
 
 Cell.prototype.floodFill = function() {
