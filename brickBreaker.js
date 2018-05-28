@@ -80,4 +80,6 @@ function draw() {
       grid[i][j].show();
     }
   }
+  var sec = second();
+    //console.log(sec);
 }

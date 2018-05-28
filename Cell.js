@@ -24,6 +24,8 @@ Cell.prototype.show = function() {
 }
 
 Cell.prototype.destroy = function() {
+    totalCells--;
+    console.log(totalCells);
     this.white = true;
 	this.floodFill();
 }
@@ -47,9 +49,13 @@ Cell.prototype.contains = function(x, y) {
 Cell.prototype.getNeighbors = function() {
     var neighbors = [];
 
+    //top
     if(this.j-1 >= 0  ) { neighbors.push(grid[this.i  ][this.j-1]); }
+    //right
     if(this.i+1 < cols) { neighbors.push(grid[this.i+1][this.j  ]); }
+    //down
     if(this.j+1 < rows) { neighbors.push(grid[this.i  ][this.j+1]); }
+    //left
     if(this.i-1 >= 0  ) { neighbors.push(grid[this.i-1][this.j  ]); }
 
     return neighbors;
