@@ -5,6 +5,7 @@ var totalCells = 0;
 //size of each cell
 var w = 50;
 var colors;
+var totalClicks = 0;
 
 function setup() {
   createCanvas(401, 601);
@@ -26,7 +27,8 @@ function setup() {
 function mousePressed(){
 	for(var i = 0; i < cols; i++){
 		for(var j = 0; j < rows; j++){
-            if(grid[i][j].contains(mouseX, mouseY)){
+            if(grid[i][j].contains(mouseX, mouseY) && !grid[i][j].white){
+                totalClicks++;
                 grid[i][j].destroy();
                 checkBlocks();
             }       
@@ -75,11 +77,29 @@ function swap(curr, neighbor) {
 }
 
 function draw() {
-  for (var i = 0; i < cols; i++) {
-    for (var j = 0; j < rows; j++) {
-      grid[i][j].show();
+    for (var i = 0; i < cols; i++) {
+        for (var j = 0; j < rows; j++) {
+          grid[i][j].show();
+        }
     }
-  }
-  var sec = second();
-    //console.log(sec);
+
+    var left = document.getElementById("left");
+    var clicks= document.getElementById("clicks");
+
+    if (totalCells > 0) {
+        clicks.innerHTML  = totalClicks;
+        left.innerHTML = totalCells;
+
+        var mills = parseInt(millis());
+        var secs  = parseInt(mills / 1000);
+        var mins  = parseInt(mills / 60000);
+
+        var seconds = document.getElementById("seconds");
+        var minutes = document.getElementById("minutes");
+        var milli = document.getElementById("milliseconds");
+
+        milli.innerHTML   = mills;
+        seconds.innerHTML = secs;
+        minutes.innerHTML = mins;
+    }
 }
