@@ -90,9 +90,9 @@ function draw() {
         clicks.innerHTML  = totalClicks;
         left.innerHTML = totalCells;
 
-        var mills = parseInt(millis());
-        var secs  = parseInt(mills / 1000);
-        var mins  = parseInt(mills / 60000);
+        var mills = parseInt(millis() % 100);
+        var secs  = parseInt(millis() / 1000 );
+        var mins  = parseInt(secs / 60);
 
         var seconds = document.getElementById("seconds");
         var minutes = document.getElementById("minutes");
